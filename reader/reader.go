@@ -19,7 +19,7 @@ type textStructure struct {
 
 // mapper internal interface of mapperClass
 type mapper interface {
-	Insert([]string, uint32)
+	Insert([]string, int)
 	Remove(string)
 }
 
@@ -34,7 +34,7 @@ func New(mapper mapper, minWordLength int) *textStructure {
 }
 
 // Read read and parse each line from the text
-func (t *textStructure) Read(content string, paragraphNumber uint32) {
+func (t *textStructure) Read(content string, paragraphNumber int) {
 	line := t.rgp.ReplaceAllString(content, "")
 
 	if line = strings.TrimSpace(line); line != "" {

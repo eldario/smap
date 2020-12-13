@@ -10,27 +10,30 @@ import (
 type sortedMap struct {
 	itemsMutex sync.Mutex
 	words      map[string]*wordItem
-	topCount   uint
+	topCount   int
 }
 
 // wordItem structure of word object
 type wordItem struct {
 	Word   string
 	Count  uint32
-	line   uint32
+	line   int
 	column int
 }
 
 // New Structure constructor
-func New(topCount uint) *sortedMap {
+func New() *sortedMap {
 	return &sortedMap{
-		words:      make(map[string]*wordItem),
-		topCount:   topCount,
+		words: make(map[string]*wordItem),
 	}
 }
 
+func (s *sortedMap) SetTopCount(value int) {
+	s.topCount = value
+}
+
 // Insert a new word in words map
-func (s *sortedMap) Insert(words []string, position uint32) {
+func (s *sortedMap) Insert(words []string, position int) {
 	s.itemsMutex.Lock()
 	defer s.itemsMutex.Unlock()
 
@@ -80,7 +83,7 @@ func (s *sortedMap) GetResults() []wordItem {
 		return sortedResult[i].Count > sortedResult[j].Count
 	})
 
-	if len(sortedResult) >= int(s.topCount) {
+	if len(sortedResult) >= s.topCount {
 		sortedResult = sortedResult[:s.topCount]
 	}
 
