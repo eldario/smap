@@ -9,12 +9,12 @@ import (
 // sortedMap internal structure for class
 type sortedMap struct {
 	itemsMutex sync.Mutex
-	words      map[string]*wordItem
+	words      map[string]*WordItem
 	topCount   int
 }
 
-// wordItem structure of word object
-type wordItem struct {
+// WordItem structure of word object
+type WordItem struct {
 	Word   string
 	Count  uint32
 	line   int
@@ -24,7 +24,7 @@ type wordItem struct {
 // New Structure constructor
 func New() *sortedMap {
 	return &sortedMap{
-		words: make(map[string]*wordItem),
+		words: make(map[string]*WordItem),
 	}
 }
 
@@ -39,7 +39,7 @@ func (s *sortedMap) Insert(words []string, position int) {
 
 	for wordIndex, word := range words {
 		if _, ok := s.words[word]; !ok {
-			s.words[word] = &wordItem{
+			s.words[word] = &WordItem{
 				word,
 				0,
 				position,
@@ -69,8 +69,8 @@ func (s *sortedMap) Remove(word string) {
 }
 
 // GetResults Get frequently used words in text
-func (s *sortedMap) GetResults() []wordItem {
-	var sortedResult []wordItem
+func (s *sortedMap) GetResults() []WordItem {
+	var sortedResult []WordItem
 
 	for _, word := range s.words {
 		sortedResult = append(sortedResult, *word)
