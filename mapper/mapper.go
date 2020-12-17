@@ -88,6 +88,9 @@ func (s *sortedMap) GetResults() []WordItem {
 	}
 
 	sort.Slice(sortedResult, func(i, j int) bool {
+		if sortedResult[i].line == sortedResult[j].line {
+			return sortedResult[i].column < sortedResult[j].column
+		}
 		return sortedResult[i].line < sortedResult[j].line
 	})
 
